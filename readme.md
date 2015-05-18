@@ -51,4 +51,5 @@ You will use click handlers, data-attributes, and whatever other means possible 
 -  The [attr](http://api.jquery.com/attr/) method can both _get_ and _set_ attribute values. `$(this).attr("data-price")`
 
 
-Image attribution can be found in images.md
+Image attribution can be found in images.md# jquery-image-filtering
+# jquery-image-filtering
