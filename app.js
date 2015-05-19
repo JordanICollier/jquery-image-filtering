@@ -21,10 +21,7 @@ $(document).ready(function() {
 	// Handlebars
 	var source   = $("#cabins-template").html();
 	var template = Handlebars.compile(source);
-	var html     = template({cabins: cabins});
-
-	$('.image-container').html(html);
-	console.log(html);
+	setCabins(cabins);
 
 
 // Background buttons
@@ -45,15 +42,18 @@ $(document).ready(function() {
 	$('.low').on("click", function(e){
 		e.preventDefault();
 		var lowSorted = _.sortBy(cabins, 'price');
-		var html = template({cabins: lowSorted});
-		$('.image-container').html(html);
+		setCabins(lowSorted);
 	});
 	// Sort High
 	$('.high').on("click", function(e){
 		e.preventDefault();
 		var highSorted = _.sortBy(cabins, 'price').reverse();
-		var html = template({cabins: highSorted});
-		$('.image-container').html(html);
+		setCabins(highSorted);
 	});
+
+	function setCabins(newCabins){
+		var html = template({cabins: newCabins});
+		$('.image-container').html(html);
+	}
 
 });
