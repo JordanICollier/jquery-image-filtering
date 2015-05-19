@@ -51,9 +51,59 @@ $(document).ready(function() {
 		setCabins(highSorted);
 	});
 
+	$('.filters').on('click', 'input[type="checkbox"]', function(e) {
+	  // find the parent element
+	  var checkboxes = $(e.delegateTarget)
+	    // find all of the checkboxes
+	    .find('input[type="checkbox"]')
+	    // grab the checkedness and value
+	    .map(function(index, elem) {
+	      var jqElem = $(elem);
+	      return {
+	        checked: jqElem.prop('checked'),
+	        price: +jqElem.attr('value')
+	      };
+	    // pull out the results
+	    }).get();
+	  // make sure at least one checbox is checked
+	  if (!_.any(checkboxes, 'checked')) {
+	    setCabins(cabins);
+	    return;
+	  }
+	  // filter cabins
+	  var filtered = _.filter(cabins, function(cabin) {
+	    // see if the cabin price is in range of any of the checkboxes
+	    return _.any(checkboxes, function(checkbox, index) {
+	      if (!checkbox.checked) { return false; }
+	      // grab the previous checkbox
+	      var previous = checkboxes[index - 1];
+	      // make sure that were above the lower range
+	      var greaterThanPrev;
+	      // if previous exists checkbox, make sure were above it's price
+	      if (previous) { greaterThanPrev = cabin.price > previous.price; }
+	      // if it doesn't exist, assume there is no bottom threshold
+	      else          { greaterThanPrev = true; }
+	      // return whether or not we are in range
+	      return greaterThanPrev && cabin.price <= checkbox.price;
+	    });
+	  });
+	  // update the page
+	  setCabins(filtered);
+	});
+
+
+
+
+
+
 	function setCabins(newCabins){
 		var html = template({cabins: newCabins});
 		$('.image-container').html(html);
 	}
 
+	// Filter different price ranges
+	$('.filters input[type="checkbox"]').on("click", function() {
+
+		console.log(this.value);
+	});
 });
