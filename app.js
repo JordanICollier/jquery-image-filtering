@@ -72,5 +72,15 @@ var lowToggle = function(){
 
 		highToggle();
 
+// Showing One Price Range
+
+
+	var sortCabin = function(){ $('input[type="checkbox"][value="50000"]').on('click', function(){
+		console.log("yes");
+
+		});
+	};
+	sortCabin();
+
 
 });
